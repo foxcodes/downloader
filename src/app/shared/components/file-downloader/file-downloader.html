@@ -1,0 +1,10 @@
+<app-file-downloader-header
+    [selectedRows]="selectedRows()"
+    [rows]="rows()"
+    (selectAllClicked)="onSelectAllClicked($event)"
+></app-file-downloader-header>
+<app-file-downloader-table
+    [rows]="rows()"
+    [selectAll]="selectAll()"
+    (selectedRowsChanged)="onSelectedRowsChanged($event)"
+></app-file-downloader-table>

@@ -1,0 +1,31 @@
+:host {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 35px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    font-size: 22px;
+
+    .file-downloader-header-checkbox-container {
+        margin-left: 15px;
+
+        .file-downloader-header-checkbox {
+            margin-left: 10px;
+        }
+    }
+    .file-downloader-header-download-action-container {
+        margin-left: 40px
+    }
+
+    .file-downloader-header-download-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+
+        .ng-fa-icon {
+            margin-right: 15px;
+        }
+    }
+}

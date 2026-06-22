@@ -1,0 +1,65 @@
+.file-downloader-table {
+    width: 100%;
+
+    .file-downloader-table-header {
+        border: 1px solid #d3d3d3;
+
+        tr {
+            text-align: left;
+
+            th {
+                text-align: left;
+                font-size: 18px;
+                font-weight: 500;
+                color: #6b7280;
+                padding: 10px 16px;
+                border-bottom: 1px solid #e5e7eb;
+                white-space: nowrap;
+                background: #ffffff;
+            }
+        }
+    }
+
+    .file-downloader-table-row {
+        border: 1px solid #d3d3d3;
+        border-top: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f9fafb;
+        }
+
+        &--selected {
+            background-color: #e8eeff;
+        }
+
+        td {
+            padding: 12px 16px;
+            font-size: 16px;
+            color: #1a1a1a;
+            vertical-align: middle;
+        }
+
+        .file-downloader-select-checkbox {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .file-downloader-table-col-status {
+            text-transform: capitalize;
+            display: flex;
+            align-items: center;
+
+            .file-downloader-status-available {
+                margin-left: -25px;
+                margin-right: 10px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: #16a34a;
+                flex-shrink: 0;
+                display: inline-block;
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+<div class="file-downloader-header-checkbox-container">
+    <input type="checkbox" class="file-downloader-header-checkbox" aria-label="Select all available files" [checked]="isAllSelected()" [indeterminate]="isIndeterminate()" (click)="selectAll($event)"/>
+</div>
+
+<div class="file-downloader-header-count-container">
+    <p class="file-downloader-header-count">
+        @if (selectedRows().length) {
+            Selected {{selectedRows().length}}
+        } @else {
+            None Selected
+        }
+    </p>
+</div>
+
+<div class="file-downloader-header-download-action-container">
+    <button type="button" class="file-downloader-header-download-btn" [disabled]="!selectedRows().length" (click)="download()"><fa-icon icon="download"></fa-icon>Download Selected</button>
+</div>

@@ -1,0 +1,39 @@
+<table class="file-downloader-table">
+    <thead class="file-downloader-table-header">
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Name</th>
+            <th scope="col">Device</th>
+            <th scope="col">Path</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(row of rows(); track row.name) {
+            <tr 
+                class="file-downloader-table-row" 
+                [class.file-downloader-table-row--selected]="isSelected(row)"
+                (click)="handleRowClick(row)">
+                <td class="file-downloader-table-col-checkbox">
+                    <input 
+                        type="checkbox" 
+                        id=`select-${row.name}`
+                        class="file-downloader-select-checkbox"
+                        [disabled]="!isAvailable(row)"
+                        [attr.aria-label]="`Select ${row.name}`"
+                        [checked]="isSelected(row)"
+                    />
+                </td>
+                <td>{{row.name}}</td>
+                <td>{{row.device}}</td>
+                <td>{{row.path}}</td>
+                <td class="file-downloader-table-col-status">
+                    @if(row.status === 'available') {
+                        <span class="file-downloader-status-available" aria-hidden="true"></span>
+                    }
+                    {{row.status}}
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
