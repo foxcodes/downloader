@@ -98,6 +98,22 @@ describe('FileDownloader', () => {
     });
   });
 
+  describe('onDownloadSelectedClicked', () => {
+    it('should emit downloadSelected with the provided rows', () => {
+      const spy = vi.spyOn(component.downloadSelected, 'emit');
+      component.onDownloadSelectedClicked([AVAILABLE_ROW_1, AVAILABLE_ROW_2]);
+
+      expect(spy).toHaveBeenCalledWith([AVAILABLE_ROW_1, AVAILABLE_ROW_2]);
+    });
+
+    it('should emit downloadSelected with an empty array when no rows are provided', () => {
+      const spy = vi.spyOn(component.downloadSelected, 'emit');
+      component.onDownloadSelectedClicked([]);
+
+      expect(spy).toHaveBeenCalledWith([]);
+    });
+  });
+
   describe('integration: select-all flow', () => {
     it('should propagate select-all=true to the table and update selectedRows to all available rows', async () => {
       component.onSelectAllClicked(true);

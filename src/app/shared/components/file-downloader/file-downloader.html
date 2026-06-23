@@ -2,6 +2,7 @@
     [selectedRows]="selectedRows()"
     [rows]="rows()"
     (selectAllClicked)="onSelectAllClicked($event)"
+    (downloadSelectedClicked)="onDownloadSelectedClicked($event)"
 ></app-file-downloader-header>
 <app-file-downloader-table
     [colDef]="colDef()"

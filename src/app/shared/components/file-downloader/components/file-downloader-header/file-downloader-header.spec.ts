@@ -156,28 +156,20 @@ describe('FileDownloaderHeader', () => {
       expect(getDownloadBtn().disabled).toBe(false);
     });
 
-    it('should show an alert with the path and device of each selected file', async () => {
+    it('should emit downloadSelectedClicked with all selected rows', async () => {
       await setup([AVAILABLE_ROW_1, AVAILABLE_ROW_2, SCHEDULED_ROW], [AVAILABLE_ROW_1, AVAILABLE_ROW_2]);
-      const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => { });
+      const spy = vi.spyOn(component.downloadSelectedClicked, 'emit');
       getDownloadBtn().click();
 
-      const expectedMessage =
-        `Path: ${AVAILABLE_ROW_1.fields.find(f => f.fieldName === 'path')?.value}\nDevice: ${AVAILABLE_ROW_1.fields.find(f => f.fieldName === 'device')?.value}` +
-        `\n\n` +
-        `Path: ${AVAILABLE_ROW_2.fields.find(f => f.fieldName === 'path')?.value}\nDevice: ${AVAILABLE_ROW_2.fields.find(f => f.fieldName === 'device')?.value}`;
-      expect(alertSpy).toHaveBeenCalledWith(expectedMessage);
+      expect(spy).toHaveBeenCalledWith([AVAILABLE_ROW_1, AVAILABLE_ROW_2]);
     });
 
-    it('should include only the selected files in the alert, not all files', async () => {
+    it('should emit only the selected rows, not all rows', async () => {
       await setup([AVAILABLE_ROW_1, AVAILABLE_ROW_2, SCHEDULED_ROW], [AVAILABLE_ROW_2]);
-      const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => { });
+      const spy = vi.spyOn(component.downloadSelectedClicked, 'emit');
       getDownloadBtn().click();
 
-      const alertArg = alertSpy.mock.calls[0][0] as string;
-      const path2 = AVAILABLE_ROW_2.fields.find(f => f.fieldName === 'path')?.value;
-      const path1 = AVAILABLE_ROW_1.fields.find(f => f.fieldName === 'path')?.value;
-      expect(alertArg).toContain(path2);
-      expect(alertArg).not.toContain(path1);
+      expect(spy).toHaveBeenCalledWith([AVAILABLE_ROW_2]);
     });
   });
 });

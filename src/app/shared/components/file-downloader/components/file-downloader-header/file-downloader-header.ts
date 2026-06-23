@@ -13,6 +13,7 @@ export class FileDownloaderHeader {
   public selectedRows = input<FileDownloaderRow[]>([]);
   public rows = input<FileDownloaderRow[]>();
   public selectAllClicked = output<boolean>();
+  public downloadSelectedClicked = output<FileDownloaderRow[]>();
 
   private library = inject<FaIconLibrary>(FaIconLibrary);
 
@@ -53,14 +54,6 @@ export class FileDownloaderHeader {
   }
 
   public download(): void {
-    const message = this.selectedRows()
-      .map(row => {
-        const path = row.fields.find(f => f.fieldName === 'path')?.value ?? '';
-        const device = row.fields.find(f => f.fieldName === 'device')?.value ?? '';
-        return `Path: ${path}\nDevice: ${device}`;
-      })
-      .join('\n\n');
-
-    alert(message);
+    this.downloadSelectedClicked.emit(this.selectedRows());
   }
 }

@@ -2,7 +2,9 @@
   <div class="content">
     <app-file-downloader 
       [colDef]="colDef()"
-      [rows]="rows()"></app-file-downloader>
+      [rows]="rows()"
+      (downloadSelected)="onDownloadSelected($event)"
+      ></app-file-downloader>
   </div>
 </main>
 

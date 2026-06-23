@@ -71,4 +71,16 @@ export class App implements OnInit {
 
     this.rows.set(rowData);
   }
+
+  public onDownloadSelected(selectedRows: FileDownloaderRow[]): void {
+    const message = selectedRows
+      .map(row => {
+        const path = row.fields.find(f => f.fieldName === 'path')?.value ?? '';
+        const device = row.fields.find(f => f.fieldName === 'device')?.value ?? '';
+        return `Path: ${path}\nDevice: ${device}`;
+      })
+      .join('\n\n'); 
+
+      alert(message);
+  }
 }
