@@ -12,6 +12,8 @@ import { FileDownloaderRow } from '../../interfaces/file-downloader-row.interfac
 export class FileDownloaderHeader {
   public selectedRows = input<FileDownloaderRow[]>([]);
   public rows = input<FileDownloaderRow[]>();
+  public isLoading = input<boolean>(true);
+
   public selectAllClicked = output<boolean>();
   public downloadSelectedClicked = output<FileDownloaderRow[]>();
 

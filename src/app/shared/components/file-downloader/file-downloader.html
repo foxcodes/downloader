@@ -1,6 +1,7 @@
 <app-file-downloader-header
     [selectedRows]="selectedRows()"
     [rows]="rows()"
+    [isLoading]="isLoading()"
     (selectAllClicked)="onSelectAllClicked($event)"
     (downloadSelectedClicked)="onDownloadSelectedClicked($event)"
 ></app-file-downloader-header>
@@ -8,5 +9,6 @@
     [colDef]="colDef()"
     [rows]="rows()"
     [selectAll]="selectAll()"
+    [isLoading]="isLoading()"
     (selectedRowsChanged)="onSelectedRowsChanged($event)"
 ></app-file-downloader-table>

@@ -14,6 +14,7 @@ import { FileDownloaderColDef } from './interfaces/file-downloader-col-def.inter
 export class FileDownloader {
   public rows = input<FileDownloaderRow[]>();
   public colDef = input<FileDownloaderColDef[]>([])
+  public isLoading = input<boolean>(true);
 
   public downloadSelected = output<FileDownloaderRow[]>();
 

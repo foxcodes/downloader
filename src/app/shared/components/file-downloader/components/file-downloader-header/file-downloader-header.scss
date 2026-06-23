@@ -16,13 +16,12 @@
         justify-content: center;
         margin-left: 15px;
 
-        &:hover {
+        &:hover:not(:disabled) {
             background-color: $color-hover;
         }
 
-        .file-downloader-header-checkbox {
+        .file-downloader-header-checkbox:not(:disabled) {
             cursor: pointer;
-
         }
     }
     .file-downloader-header-download-action-container {
@@ -31,11 +30,15 @@
 
     .file-downloader-header-download-btn {
         background-color: transparent;
-        border: none;
         cursor: pointer;
+        border: none;
         height: 35px;
         width: 240px;
         border-radius: 20px;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
 
         &:hover:not(:disabled) {
             background-color: #bfdbfe;

@@ -2,6 +2,14 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
 
+## Pre-requisites 
+
+Install all dependencies
+
+```
+npm install
+```
+
 ## Development server
 
 To start a local development server, run:
@@ -11,6 +19,8 @@ ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+By default there is a timeout set on the data return in threat.service.ts, to mimick data load from the API. To have an instant data load comment line 16 and uncomment line 15.
 
 ## Code scaffolding
 

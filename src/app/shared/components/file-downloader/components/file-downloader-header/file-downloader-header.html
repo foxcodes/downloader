@@ -1,5 +1,5 @@
 <div class="file-downloader-header-checkbox-container">
-    <input type="checkbox" class="file-downloader-header-checkbox" aria-label="Select all available files" [checked]="isAllSelected()" [indeterminate]="isIndeterminate()" (click)="selectAll($event)"/>
+    <input type="checkbox" class="file-downloader-header-checkbox" aria-label="Select all available files" [checked]="isAllSelected()" [indeterminate]="isIndeterminate()" [disabled]="isLoading()" (click)="selectAll($event)"/>
 </div>
 
 <div class="file-downloader-header-count-container">

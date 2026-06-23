@@ -12,6 +12,7 @@ export class ThreatService {
     ];
 
     public getThreats(): Promise<Threat[]> {
-        return Promise.resolve(this.threats);
+        // return Promise.resolve(this.threats);
+        return new Promise(resolve => setTimeout(() => resolve(this.threats), 3000));
     }
 }

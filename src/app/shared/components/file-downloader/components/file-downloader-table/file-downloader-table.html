@@ -6,57 +6,56 @@
             }
         </tr>
     </thead>
-    <tbody>
-        @for(row of rows(); track $index) {
-            <tr
-                class="file-downloader-table-row" 
-                [class.file-downloader-table-row--selected]="isSelected(row)"
-                (click)="handleRowClick(row)">
 
-            @for(field of row.fields; track field.fieldName) {
-                @if(field.type === fileDownloaderFieldTypeEnum.Checkbox) {
-                    <td class="file-downloader-table-col-checkbox">
-                        <input 
-                            type="checkbox" 
-                            id="select-{{field.id}}"
-                            class="file-downloader-select-checkbox"
-                            [disabled]="!row.canDownload"
-                            [attr.aria-label]="`Select ${field.id}`"
-                            [checked]="isSelected(row)"
-                        />
-                    </td>
-                }
-
-                <!-- @if(field.type === fileDownloaderFieldTypeEnum.Value) {
-
-                    @if(field.isAvailable === true) {
-                        <td class="file-downloader-table-col-status">
-                            <span class="file-downloader-status-available" aria-hidden="true"></span>
-                            {{field.value}}
-                        </td>
-                    } @else {
-                        <td>{{field.value}}</td>
-                    }
-                }    -->
-
-                @if(field.type === fileDownloaderFieldTypeEnum.Value) {
-                    <td>{{field.value}}</td>
-                }   
-
-                @if(field.type === fileDownloaderFieldTypeEnum.Status) {
-                    <td class="file-downloader-table-col-status">
-                        @if(field.status === 'available') {
-                            <span class="file-downloader-status-available" aria-hidden="true"></span>
-                        } @else {
-                            <span class="file-downloader-status-loading" aria-hidden="true"></span>
-                        }
-                        {{field.value}}
-
-                    </td>
-                }
-            }
-
+    @if(isLoading()) {
+        <tbody>
+            <tr>
+                <td [attr.colspan]="colDef().length" class="file-downloader-table-loader"> <span class="loader-spinner"></span>
+                </td>
             </tr>
-        }
-    </tbody>
+        </tbody>
+    } @else {
+        <tbody>
+            @for(row of rows(); track $index) {
+                <tr
+                    class="file-downloader-table-row" 
+                    [class.file-downloader-table-row--selected]="isSelected(row)"
+                    (click)="handleRowClick(row)">
+
+                @for(field of row.fields; track field.fieldName) {
+                    @if(field.type === fileDownloaderFieldTypeEnum.Checkbox) {
+                        <td class="file-downloader-table-col-checkbox">
+                            <input 
+                                type="checkbox" 
+                                id="select-{{field.id}}"
+                                class="file-downloader-select-checkbox"
+                                [disabled]="!row.canDownload"
+                                [attr.aria-label]="`Select ${field.id}`"
+                                [checked]="isSelected(row)"
+                            />
+                        </td>
+                    }
+
+
+                    @if(field.type === fileDownloaderFieldTypeEnum.Value) {
+                        <td>{{field.value}}</td>
+                    }   
+
+                    @if(field.type === fileDownloaderFieldTypeEnum.Status) {
+                        <td class="file-downloader-table-col-status">
+                            @if(field.status === 'available') {
+                                <span class="file-downloader-status-available" aria-hidden="true"></span>
+                            } @else {
+                                <span class="file-downloader-status-loading" aria-hidden="true"></span>
+                            }
+                            {{field.value}}
+
+                        </td>
+                    }
+                }
+
+                </tr>
+            }
+        </tbody>
+    }
 </table>

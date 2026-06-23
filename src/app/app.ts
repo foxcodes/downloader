@@ -17,6 +17,7 @@ import { FileDownloaderFieldTypeEnum } from './shared/components/file-downloader
 export class App implements OnInit {
   protected readonly title = signal('downloader');
 
+  public isLoading = signal<boolean>(true);
   public rows = signal<FileDownloaderRow[]>([]);
   public colDef = signal<FileDownloaderColDef[]>([{
     headerName: '',
@@ -63,14 +64,14 @@ export class App implements OnInit {
             fieldName: 'status',
             value: threat.status,
             type: FileDownloaderFieldTypeEnum.Status,
-            // isAvailable: threat.status === 'available'
             status: threat.status === 'available' ? 'available' : 'loading'
         }]
       };
     });
 
     this.rows.set(rowData);
-  }
+    this.isLoading.set(false);
+  }  
 
   public onDownloadSelected(selectedRows: FileDownloaderRow[]): void {
     const message = selectedRows

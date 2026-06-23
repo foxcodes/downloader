@@ -14,6 +14,7 @@ export class FileDownloaderTable {
   public colDef = input<FileDownloaderColDef[]>([]);
   public rows = input<FileDownloaderRow[]>();
   public selectAll = input<boolean | null>();
+  public isLoading = input<boolean>(true);
 
   public selectedRows = signal<FileDownloaderRow[]>([]);
 
