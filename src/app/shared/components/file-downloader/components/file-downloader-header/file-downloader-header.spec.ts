@@ -43,6 +43,7 @@ describe('FileDownloaderHeader', () => {
   async function setup(rows: FileDownloaderRow[], selectedRows: FileDownloaderRow[] = []): Promise<void> {
     fixture.componentRef.setInput('rows', rows);
     fixture.componentRef.setInput('selectedRows', selectedRows);
+    fixture.componentRef.setInput('isLoading', false);
     fixture.detectChanges();
     await fixture.whenStable();
   }

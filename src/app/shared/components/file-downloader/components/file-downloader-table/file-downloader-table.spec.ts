@@ -59,6 +59,7 @@ describe('FileDownloaderTable', () => {
     component = fixture.componentInstance;
     fixture.componentRef.setInput('rows', ALL_ROWS);
     fixture.componentRef.setInput('selectAll', null);
+    fixture.componentRef.setInput('isLoading', false);
     fixture.detectChanges();
     await fixture.whenStable();
   });
