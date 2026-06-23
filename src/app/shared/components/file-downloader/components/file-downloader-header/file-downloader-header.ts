@@ -1,7 +1,7 @@
-import { Component, computed, inject, input, output} from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import { FileDownloaderRow } from '../../models/file-downloader-row.interface';
+import { FileDownloaderRow } from '../../interfaces/file-downloader-row.interface';
 
 @Component({
   selector: 'app-file-downloader-header',
@@ -37,7 +37,7 @@ export class FileDownloaderHeader {
     let selectAll;
 
     const selectedRows = this.selectedRows().length;
-    const totalAvailableRows = this.rows()?.filter(row => row.status === 'available').length ?? 0;
+    const totalAvailableRows = this.rows()?.filter(row => row.canDownload).length ?? 0;
 
     if (selectedRows === 0) {
       selectAll = true;
@@ -53,9 +53,13 @@ export class FileDownloaderHeader {
   }
 
   public download(): void {
-   const message = this.selectedRows()
-    .map(row => `Path: ${row.path}\nDevice: ${row.device}`)
-    .join('\n\n');
+    const message = this.selectedRows()
+      .map(row => {
+        const path = row.fields.find(f => f.fieldName === 'path')?.value ?? '';
+        const device = row.fields.find(f => f.fieldName === 'device')?.value ?? '';
+        return `Path: ${path}\nDevice: ${device}`;
+      })
+      .join('\n\n');
 
     alert(message);
   }

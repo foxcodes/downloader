@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
+import { Threat } from "../../models/threat.interface";
 
 @Injectable()
-export class DataService {
-    private data: any[] = [
+export class ThreatService {
+    private threats: Threat[] = [
         { name: 'smss.exe', device: 'Stark', path: '\\Device\\HarddiskVolume2\\Windows\\System32\\smss.exe', status: 'scheduled' },
         { name: 'netsh.exe', device: 'Targaryen', path: '\\Device\\HarddiskVolume2\\Windows\\System32\\netsh.exe', status: 'available' },
         { name: 'uxtheme.dll', device: 'Lanniester', path: '\\Device\\HarddiskVolume1\\Windows\\System32\\uxtheme.dll', status: 'available' },
@@ -10,7 +11,7 @@ export class DataService {
         { name: '7za.exe', device: 'Baratheon', path: '\\Device\\HarddiskVolume1\\temp\\7za.exe', status: 'scheduled' }
     ];
 
-    public getData(): Promise<any[]> {
-        return Promise.resolve(this.data);
+    public getThreats(): Promise<Threat[]> {
+        return Promise.resolve(this.threats);
     }
 }

@@ -4,6 +4,7 @@
     (selectAllClicked)="onSelectAllClicked($event)"
 ></app-file-downloader-header>
 <app-file-downloader-table
+    [colDef]="colDef()"
     [rows]="rows()"
     [selectAll]="selectAll()"
     (selectedRowsChanged)="onSelectedRowsChanged($event)"

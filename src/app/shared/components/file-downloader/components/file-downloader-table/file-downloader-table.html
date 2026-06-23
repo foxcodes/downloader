@@ -1,38 +1,61 @@
 <table class="file-downloader-table">
     <thead class="file-downloader-table-header">
         <tr>
-            <th scope="col"></th>
-            <th scope="col">Name</th>
-            <th scope="col">Device</th>
-            <th scope="col">Path</th>
-            <th scope="col">Status</th>
+            @for(col of colDef(); track col.headerName) {
+                <th scope="col">{{col.headerName}}</th>
+            }
         </tr>
     </thead>
     <tbody>
-        @for(row of rows(); track row.name) {
-            <tr 
+        @for(row of rows(); track $index) {
+            <tr
                 class="file-downloader-table-row" 
                 [class.file-downloader-table-row--selected]="isSelected(row)"
                 (click)="handleRowClick(row)">
-                <td class="file-downloader-table-col-checkbox">
-                    <input 
-                        type="checkbox" 
-                        id=`select-${row.name}`
-                        class="file-downloader-select-checkbox"
-                        [disabled]="!isAvailable(row)"
-                        [attr.aria-label]="`Select ${row.name}`"
-                        [checked]="isSelected(row)"
-                    />
-                </td>
-                <td>{{row.name}}</td>
-                <td>{{row.device}}</td>
-                <td>{{row.path}}</td>
-                <td class="file-downloader-table-col-status">
-                    @if(row.status === 'available') {
-                        <span class="file-downloader-status-available" aria-hidden="true"></span>
+
+            @for(field of row.fields; track field.fieldName) {
+                @if(field.type === fileDownloaderFieldTypeEnum.Checkbox) {
+                    <td class="file-downloader-table-col-checkbox">
+                        <input 
+                            type="checkbox" 
+                            id="select-{{field.id}}"
+                            class="file-downloader-select-checkbox"
+                            [disabled]="!row.canDownload"
+                            [attr.aria-label]="`Select ${field.id}`"
+                            [checked]="isSelected(row)"
+                        />
+                    </td>
+                }
+
+                <!-- @if(field.type === fileDownloaderFieldTypeEnum.Value) {
+
+                    @if(field.isAvailable === true) {
+                        <td class="file-downloader-table-col-status">
+                            <span class="file-downloader-status-available" aria-hidden="true"></span>
+                            {{field.value}}
+                        </td>
+                    } @else {
+                        <td>{{field.value}}</td>
                     }
-                    {{row.status}}
-                </td>
+                }    -->
+
+                @if(field.type === fileDownloaderFieldTypeEnum.Value) {
+                    <td>{{field.value}}</td>
+                }   
+
+                @if(field.type === fileDownloaderFieldTypeEnum.Status) {
+                    <td class="file-downloader-table-col-status">
+                        @if(field.status === 'available') {
+                            <span class="file-downloader-status-available" aria-hidden="true"></span>
+                        } @else {
+                            <span class="file-downloader-status-loading" aria-hidden="true"></span>
+                        }
+                        {{field.value}}
+
+                    </td>
+                }
+            }
+
             </tr>
         }
     </tbody>

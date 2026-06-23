@@ -1,3 +1,5 @@
+@use '../../variables' as *;
+
 :host {
     display: flex;
     flex-flow: row nowrap;
@@ -5,13 +7,22 @@
     gap: 35px;
     padding-top: 15px;
     padding-bottom: 10px;
-    font-size: 22px;
+    font-size: 20px;
 
     .file-downloader-header-checkbox-container {
+        height: 30px;
+        width: 30px;
+        display: flex;
+        justify-content: center;
         margin-left: 15px;
 
+        &:hover {
+            background-color: $color-hover;
+        }
+
         .file-downloader-header-checkbox {
-            margin-left: 10px;
+            cursor: pointer;
+
         }
     }
     .file-downloader-header-download-action-container {
@@ -22,7 +33,13 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
+        height: 35px;
+        width: 240px;
+        border-radius: 20px;
 
+        &:hover {
+            background-color: $color-hover;
+        }
 
         .ng-fa-icon {
             margin-right: 15px;

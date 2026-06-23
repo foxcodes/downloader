@@ -1,10 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileDownloaderTable } from './file-downloader-table';
-import { FileDownloaderRow } from '../../models/file-downloader-row.interface';
+import { FileDownloaderRow } from '../../interfaces/file-downloader-row.interface';
+import { FileDownloaderFieldTypeEnum } from '../../enums/file-downloader-field-type.enum';
 
-const AVAILABLE_ROW_1: FileDownloaderRow = { name: 'smss.exe', device: 'Daniel', path: '\\Device\\HarddiskVolume2\\Windows\\System32\\smss.exe', status: 'available' };
-const AVAILABLE_ROW_2: FileDownloaderRow = { name: 'netsh.exe', device: 'Daniel', path: '\\Device\\HarddiskVolume2\\Windows\\System32\\netsh.exe', status: 'available' };
-const SCHEDULED_ROW: FileDownloaderRow = { name: 'uxtheme.dll', device: 'Tester', path: '\\Device\\HarddiskVolume2\\Windows\\System32\\uxtheme.dll', status: 'scheduled' };
+const AVAILABLE_ROW_1: FileDownloaderRow = {
+  canDownload: true,
+  fields: [
+    { fieldName: 'checkbox', type: FileDownloaderFieldTypeEnum.Checkbox, id: 'smss.exe' },
+    { fieldName: 'name', value: 'smss.exe', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'device', value: 'Daniel', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'path', value: '\\Device\\HarddiskVolume2\\Windows\\System32\\smss.exe', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'status', value: 'available', type: FileDownloaderFieldTypeEnum.Value, isAvailable: true },
+  ]
+};
+
+const AVAILABLE_ROW_2: FileDownloaderRow = {
+  canDownload: true,
+  fields: [
+    { fieldName: 'checkbox', type: FileDownloaderFieldTypeEnum.Checkbox, id: 'netsh.exe' },
+    { fieldName: 'name', value: 'netsh.exe', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'device', value: 'Daniel', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'path', value: '\\Device\\HarddiskVolume2\\Windows\\System32\\netsh.exe', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'status', value: 'available', type: FileDownloaderFieldTypeEnum.Value, isAvailable: true },
+  ]
+};
+
+const SCHEDULED_ROW: FileDownloaderRow = {
+  canDownload: false,
+  fields: [
+    { fieldName: 'checkbox', type: FileDownloaderFieldTypeEnum.Checkbox, id: 'uxtheme.dll' },
+    { fieldName: 'name', value: 'uxtheme.dll', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'device', value: 'Tester', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'path', value: '\\Device\\HarddiskVolume2\\Windows\\System32\\uxtheme.dll', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'status', value: 'scheduled', type: FileDownloaderFieldTypeEnum.Value, isAvailable: false },
+  ]
+};
+
 const ALL_ROWS = [AVAILABLE_ROW_1, AVAILABLE_ROW_2, SCHEDULED_ROW];
 
 describe('FileDownloaderTable', () => {
@@ -151,6 +182,35 @@ describe('FileDownloaderTable', () => {
       fixture.detectChanges();
 
       expect(component.selectedRows()).toEqual([AVAILABLE_ROW_1, AVAILABLE_ROW_2]);
+    });
+  });
+
+  describe('status formatting', () => {
+    it('should show the status indicator for available rows', () => {
+      const indicators = fixture.nativeElement.querySelectorAll('.file-downloader-status-available');
+
+      expect(indicators.length).toBe(2);
+    });
+
+    it('should not show the status indicator for scheduled rows', () => {
+      const scheduledRowEl: HTMLElement = getTableRows()[2];
+      const indicator = scheduledRowEl.querySelector('.file-downloader-status-available');
+
+      expect(indicator).toBeNull();
+    });
+
+    it('should render the status cell with the status-available class for available rows', () => {
+      const availableRowEl: HTMLElement = getTableRows()[0];
+      const statusCell = availableRowEl.querySelector('.file-downloader-table-col-status');
+
+      expect(statusCell).not.toBeNull();
+    });
+
+    it('should not render the status-available cell class for scheduled rows', () => {
+      const scheduledRowEl: HTMLElement = getTableRows()[2];
+      const statusCell = scheduledRowEl.querySelector('.file-downloader-table-col-status');
+
+      expect(statusCell).toBeNull();
     });
   });
 });

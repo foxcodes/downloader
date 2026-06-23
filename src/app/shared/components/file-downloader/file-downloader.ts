@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import { FileDownloaderHeader } from './components/file-downloader-header/file-downloader-header';
-import { FileDownloaderRow } from './models/file-downloader-row.interface';
+import { FileDownloaderRow } from './interfaces/file-downloader-row.interface';
 import { FileDownloaderTable } from './components/file-downloader-table/file-downloader-table';
+import { FileDownloaderColDef } from './interfaces/file-downloader-col-def.interface';
 
 @Component({
   selector: 'app-file-downloader',
@@ -12,13 +13,14 @@ import { FileDownloaderTable } from './components/file-downloader-table/file-dow
 })
 export class FileDownloader {
   public rows = input<FileDownloaderRow[]>();
-  
+  public colDef = input<FileDownloaderColDef[]>([])
+
   public selectedRows = signal<FileDownloaderRow[]>([]);
   public selectAll = signal<boolean | null>(null);
 
   public onSelectedRowsChanged(selectedRows: FileDownloaderRow[]): void {
     this.selectedRows.set(selectedRows?.length ? selectedRows : []);
-    
+
     if (this.selectAll() !== null) {
       this.selectAll.set(null);
     }

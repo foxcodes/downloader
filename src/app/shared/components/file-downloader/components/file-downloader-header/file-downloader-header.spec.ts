@@ -1,10 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileDownloaderHeader } from './file-downloader-header';
-import { FileDownloaderRow } from '../../models/file-downloader-row.interface';
+import { FileDownloaderRow } from '../../interfaces/file-downloader-row.interface';
+import { FileDownloaderFieldTypeEnum } from '../../enums/file-downloader-field-type.enum';
 
-const AVAILABLE_ROW_1: FileDownloaderRow = { name: 'smss.exe', device: 'Daniel', path: '\\Device\\HarddiskVolume2\\Windows\\System32\\smss.exe', status: 'available' };
-const AVAILABLE_ROW_2: FileDownloaderRow = { name: 'netsh.exe', device: 'Daniel', path: '\\Device\\HarddiskVolume2\\Windows\\System32\\netsh.exe', status: 'available' };
-const SCHEDULED_ROW: FileDownloaderRow = { name: 'uxtheme.dll', device: 'Tester', path: '\\Device\\HarddiskVolume2\\Windows\\System32\\uxtheme.dll', status: 'scheduled' };
+const AVAILABLE_ROW_1: FileDownloaderRow = {
+  canDownload: true,
+  fields: [
+    { fieldName: 'device', value: 'Daniel', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'path', value: '\\Device\\HarddiskVolume2\\Windows\\System32\\smss.exe', type: FileDownloaderFieldTypeEnum.Value },
+  ]
+};
+
+const AVAILABLE_ROW_2: FileDownloaderRow = {
+  canDownload: true,
+  fields: [
+    { fieldName: 'device', value: 'Daniel', type: FileDownloaderFieldTypeEnum.Value },
+    { fieldName: 'path', value: '\\Device\\HarddiskVolume2\\Windows\\System32\\netsh.exe', type: FileDownloaderFieldTypeEnum.Value },
+  ]
+};
+
+const SCHEDULED_ROW: FileDownloaderRow = {
+  canDownload: false,
+  fields: []
+};
 
 describe('FileDownloaderHeader', () => {
   let component: FileDownloaderHeader;
@@ -140,24 +158,26 @@ describe('FileDownloaderHeader', () => {
 
     it('should show an alert with the path and device of each selected file', async () => {
       await setup([AVAILABLE_ROW_1, AVAILABLE_ROW_2, SCHEDULED_ROW], [AVAILABLE_ROW_1, AVAILABLE_ROW_2]);
-      const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+      const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => { });
       getDownloadBtn().click();
 
       const expectedMessage =
-        `Path: ${AVAILABLE_ROW_1.path}\nDevice: ${AVAILABLE_ROW_1.device}` +
+        `Path: ${AVAILABLE_ROW_1.fields.find(f => f.fieldName === 'path')?.value}\nDevice: ${AVAILABLE_ROW_1.fields.find(f => f.fieldName === 'device')?.value}` +
         `\n\n` +
-        `Path: ${AVAILABLE_ROW_2.path}\nDevice: ${AVAILABLE_ROW_2.device}`;
+        `Path: ${AVAILABLE_ROW_2.fields.find(f => f.fieldName === 'path')?.value}\nDevice: ${AVAILABLE_ROW_2.fields.find(f => f.fieldName === 'device')?.value}`;
       expect(alertSpy).toHaveBeenCalledWith(expectedMessage);
     });
 
     it('should include only the selected files in the alert, not all files', async () => {
       await setup([AVAILABLE_ROW_1, AVAILABLE_ROW_2, SCHEDULED_ROW], [AVAILABLE_ROW_2]);
-      const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+      const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => { });
       getDownloadBtn().click();
 
       const alertArg = alertSpy.mock.calls[0][0] as string;
-      expect(alertArg).toContain(AVAILABLE_ROW_2.path);
-      expect(alertArg).not.toContain(AVAILABLE_ROW_1.path);
+      const path2 = AVAILABLE_ROW_2.fields.find(f => f.fieldName === 'path')?.value;
+      const path1 = AVAILABLE_ROW_1.fields.find(f => f.fieldName === 'path')?.value;
+      expect(alertArg).toContain(path2);
+      expect(alertArg).not.toContain(path1);
     });
   });
 });
