@@ -37,8 +37,8 @@
         width: 240px;
         border-radius: 20px;
 
-        &:hover {
-            background-color: $color-hover;
+        &:hover:not(:disabled) {
+            background-color: #bfdbfe;
         }
 
         .ng-fa-icon {

@@ -10,7 +10,7 @@ const AVAILABLE_ROW_1: FileDownloaderRow = {
     { fieldName: 'name', value: 'smss.exe', type: FileDownloaderFieldTypeEnum.Value },
     { fieldName: 'device', value: 'Daniel', type: FileDownloaderFieldTypeEnum.Value },
     { fieldName: 'path', value: '\\Device\\HarddiskVolume2\\Windows\\System32\\smss.exe', type: FileDownloaderFieldTypeEnum.Value },
-    { fieldName: 'status', value: 'available', type: FileDownloaderFieldTypeEnum.Value, isAvailable: true },
+    { fieldName: 'status', value: 'available', type: FileDownloaderFieldTypeEnum.Status, status: 'available' },
   ]
 };
 
@@ -21,7 +21,7 @@ const AVAILABLE_ROW_2: FileDownloaderRow = {
     { fieldName: 'name', value: 'netsh.exe', type: FileDownloaderFieldTypeEnum.Value },
     { fieldName: 'device', value: 'Daniel', type: FileDownloaderFieldTypeEnum.Value },
     { fieldName: 'path', value: '\\Device\\HarddiskVolume2\\Windows\\System32\\netsh.exe', type: FileDownloaderFieldTypeEnum.Value },
-    { fieldName: 'status', value: 'available', type: FileDownloaderFieldTypeEnum.Value, isAvailable: true },
+    { fieldName: 'status', value: 'available', type: FileDownloaderFieldTypeEnum.Status, status: 'available' },
   ]
 };
 
@@ -32,7 +32,7 @@ const SCHEDULED_ROW: FileDownloaderRow = {
     { fieldName: 'name', value: 'uxtheme.dll', type: FileDownloaderFieldTypeEnum.Value },
     { fieldName: 'device', value: 'Tester', type: FileDownloaderFieldTypeEnum.Value },
     { fieldName: 'path', value: '\\Device\\HarddiskVolume2\\Windows\\System32\\uxtheme.dll', type: FileDownloaderFieldTypeEnum.Value },
-    { fieldName: 'status', value: 'scheduled', type: FileDownloaderFieldTypeEnum.Value, isAvailable: false },
+    { fieldName: 'status', value: 'scheduled', type: FileDownloaderFieldTypeEnum.Status, status: 'loading' },
   ]
 };
 
@@ -206,11 +206,15 @@ describe('FileDownloaderTable', () => {
       expect(statusCell).not.toBeNull();
     });
 
-    it('should not render the status-available cell class for scheduled rows', () => {
+    it('should render the status cell with the loading indicator for scheduled rows', () => {
       const scheduledRowEl: HTMLElement = getTableRows()[2];
       const statusCell = scheduledRowEl.querySelector('.file-downloader-table-col-status');
+      const loadingIndicator = scheduledRowEl.querySelector('.file-downloader-status-loading');
+      const availableIndicator = scheduledRowEl.querySelector('.file-downloader-status-available');
 
-      expect(statusCell).toBeNull();
+      expect(statusCell).not.toBeNull();
+      expect(loadingIndicator).not.toBeNull();
+      expect(availableIndicator).toBeNull();
     });
   });
 });
