@@ -20,7 +20,7 @@ npm run start
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-By default there is a timeout set on the data return in threat.service.ts, to mimick data load from the API. To have an instant data load comment line 16 and uncomment line 15.
+By default there is a timeout set on the data return in threat.service.ts, to mimick data load from the API. To have an instant data load comment line 16 and uncomment line 15 in threat.service.ts.
 
 ## Code scaffolding
 
